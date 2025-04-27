@@ -497,7 +497,7 @@
 /* Стили для аудиоплеера */
 .audio-player {
     position: fixed;
-    top: -100px;
+    top: -300px; /* Скрыт за верхней границей */
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
@@ -506,23 +506,25 @@
     backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
     border-radius: 16px;
-    padding: 15px;
-    box-shadow: 0 8px 20px var(--shadow-dark);
+    box-shadow: 0 10px 30px var(--shadow-dark);
     z-index: 1000;
-    transition: top 0.3s ease;
-    visibility: hidden;
+    transition: top 0.5s ease;
+    overflow: hidden;
 }
 
 .audio-player.active {
-    top: 20px;
-    visibility: visible;
+    top: 20px; /* Появляется сверху */
 }
 
-.player-content {
+.audio-player-content {
+    padding: 20px;
+}
+
+.player-header {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
+    margin-bottom: 15px;
 }
 
 .player-title {
@@ -533,77 +535,142 @@
     -webkit-text-fill-color: transparent;
 }
 
-.player-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
+.player-close {
+    background: none;
+    border: none;
+    color: var(--primary-light);
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.3s ease;
 }
 
-.player-btn {
-    background: var(--accent-blue);
-    border: none;
-    color: white;
+.player-close:hover {
+    transform: rotate(90deg);
+}
+
+.player-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.control-button {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
-    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-light);
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.player-btn:hover {
-    background: #0066cc;
+.control-button:hover {
+    background: var(--accent-blue);
+    box-shadow: 0 0 10px var(--accent-blue);
     transform: scale(1.1);
 }
 
-.seek-slider {
-    flex-grow: 1;
-    -webkit-appearance: none;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 3px;
-    outline: none;
-    cursor: pointer;
-}
-
-.seek-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 14px;
-    height: 14px;
-    background: var(--accent-blue);
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.seek-slider::-moz-range-thumb {
-    width: 14px;
-    height: 14px;
-    background: var(--accent-blue);
-    border-radius: 50%;
-    cursor: pointer;
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 #current-time, #duration {
     font-size: 14px;
     color: var(--primary-light);
+    min-width: 40px;
+    text-align: center;
+}
+
+.progress-bar {
+    flex-grow: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.progress-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: var(--accent-blue);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent-blue);
+}
+
+.progress-bar::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: var(--accent-blue);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent-blue);
+}
+
+.progress-bar::-webkit-slider-runnable-track {
+    background: linear-gradient(
+        to right,
+        var(--accent-blue) 0%,
+        var(--accent-blue) var(--progress),
+        rgba(255, 255, 255, 0.2) var(--progress),
+        rgba(255, 255, 255, 0.2) 100%
+    );
+}
+
+.progress-bar::-moz-range-progress {
+    background: var(--accent-blue);
+    border-radius: 3px;
 }
     </style>
 </head>
 <body>
-    <div class="background-animation"></div>
+ <div class="background-animation"></div>
+    
+    <!-- Контейнер для аудиоплеера -->
     <div id="audio-player" class="audio-player">
-    <div class="player-content">
-        <span class="player-title">Мальчик с веснушками</span>
-        <div class="player-controls">
-            <button id="play-pause-btn" class="player-btn">▶</button>
-            <input type="range" id="seek-slider" min="0" max="100" value="0" class="seek-slider">
-            <span id="current-time">0:00</span> / <span id="duration">0:00</span>
-            <button id="stop-btn" class="player-btn">■</button>
-            <button id="close-btn" class="player-btn">✖</button>
+        <div class="audio-player-content">
+            <div class="player-header">
+                <span class="player-title">Мальчик с веснушками</span>
+                <button class="player-close" title="Закрыть">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="player-controls">
+                <button id="play-pause" class="control-button" title="Воспроизвести/Пауза">
+                    <svg id="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <svg id="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                    </svg>
+                </button>
+                <button id="stop" class="control-button" title="Остановить">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6 6h12v12H6z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="progress-container">
+                <span id="current-time">0:00</span>
+                <input type="range" id="progress" min="0" max="100" value="0" class="progress-bar">
+                <span id="duration">0:00</span>
+            </div>
         </div>
+        <audio id="audio" src="malchick_s_vesnychkami.mp3"></audio>
     </div>
-</div>
+    
+    <div class="background-animation"></div>
     
     <div class="container">
         <div id="who-am-i" class="content-section active">
@@ -765,12 +832,12 @@
             <span class="button-text">GitHub</span>
         </a>
           <!-- Контейнер для музыкальных карточек -->
-        <div class="music-cards-container">
+       <div class="music-cards-container">
             <div class="music-card">
                 <img src="https://i.discogs.com/mLfn1YlkQx9aL8ONMdtrk-nznK6Kpq1u6Tnx4IlyozY/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI2MTAx/Nzk4LTE2NzY0MDI4/MzEtMzQ0OS5qcGVn.jpeg" alt="Постер 1" class="music-poster">
                 <div class="music-info">
                     <h3>Мальчик с веснушками</h3>
-                    <a href="#" class="listen-button">Слушать</a>
+                    <a href="#" class="listen-button" data-track="malchick_s_vesnychkami.mp3">Слушать</a>
                 </div>
             </div>
             <div class="music-card">
@@ -910,84 +977,103 @@
             // document.getElementById('avatar').src = 'путь_к_аватарке';
         });
         
-        
         // Управление аудиоплеером
 const audioPlayer = document.getElementById('audio-player');
-const playPauseBtn = document.getElementById('play-pause-btn');
-const stopBtn = document.getElementById('stop-btn');
-const closeBtn = document.getElementById('close-btn');
-const seekSlider = document.getElementById('seek-slider');
-const currentTime = document.getElementById('current-time');
-const duration = document.getElementById('duration');
-const audio = new Audio('https://su.muzmo.cc/get/music/20201205/STRUKTURA_SCHASTYA_-_Malchik_s_vesnushkami_71856042.mp3');
+const audio = document.getElementById('audio');
+const playPauseBtn = document.getElementById('play-pause');
+const stopBtn = document.getElementById('stop');
+const progressBar = document.getElementById('progress');
+const currentTimeEl = document.getElementById('current-time');
+const durationEl = document.getElementById('duration');
+const closeBtn = document.querySelector('.player-close');
+const playIcon = document.getElementById('play-icon');
+const pauseIcon = document.getElementById('pause-icon');
 
-let isPlaying = false;
-
-// Форматирование времени (мм:сс)
+// Форматирование времени (mm:ss)
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
     seconds = Math.floor(seconds % 60);
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
 }
 
-// Обновление ползунка и времени
+// Показать плеер
+function showPlayer() {
+    audioPlayer.classList.add('active');
+}
+
+// Скрыть плеер
+function hidePlayer() {
+    audioPlayer.classList.remove('active');
+    audio.pause();
+    audio.currentTime = 0;
+    progressBar.value = 0;
+    currentTimeEl.textContent = '0:00';
+    playIcon.style.display = 'block';
+    pauseIcon.style.display = 'none';
+}
+
+// Обновление прогресс-бара и времени
 audio.addEventListener('timeupdate', () => {
-    const current = audio.currentTime;
-    const dur = audio.duration;
-    seekSlider.value = (current / dur) * 100;
-    currentTime.textContent = formatTime(current);
-    duration.textContent = formatTime(dur);
-});
-
-// Установка длительности после загрузки метаданных
-audio.addEventListener('loadedmetadata', () => {
-    duration.textContent = formatTime(audio.duration);
-    seekSlider.max = 100;
-});
-
-// Перемотка
-seekSlider.addEventListener('input', () => {
-    const seekTo = audio.duration * (seekSlider.value / 100);
-    audio.currentTime = seekTo;
-});
-
-// Воспроизведение/Пауза
-playPauseBtn.addEventListener('click', () => {
-    if (isPlaying) {
-        audio.pause();
-        playPauseBtn.textContent = '▶';
-    } else {
-        audio.play();
-        playPauseBtn.textContent = '❚❚';
+    const currentTime = audio.currentTime;
+    const duration = audio.duration;
+    progressBar.value = (currentTime / duration) * 100;
+    currentTimeEl.textContent = formatTime(currentTime);
+    if (!isNaN(duration)) {
+        durationEl.textContent = formatTime(duration);
     }
-    isPlaying = !isPlaying;
 });
 
-// Стоп
+// Загрузка длительности трека
+audio.addEventListener('loadedmetadata', () => {
+    durationEl.textContent = formatTime(audio.duration);
+});
+
+// Перемотка при изменении ползунка
+progressBar.addEventListener('input', () => {
+    const duration = audio.duration;
+    audio.currentTime = (progressBar.value / 100) * duration;
+});
+
+// Воспроизведение/пауза
+playPauseBtn.addEventListener('click', () => {
+    if (audio.paused) {
+        audio.play();
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+    } else {
+        audio.pause();
+        playIcon.style.display = 'block';
+        pauseIcon.style.display = 'none';
+    }
+});
+
+// Остановка
 stopBtn.addEventListener('click', () => {
     audio.pause();
     audio.currentTime = 0;
-    playPauseBtn.textContent = '▶';
-    isPlaying = false;
+    progressBar.value = 0;
+    currentTimeEl.textContent = '0:00';
+    playIcon.style.display = 'block';
+    pauseIcon.style.display = 'none';
 });
 
 // Закрытие плеера
-closeBtn.addEventListener('click', () => {
-    audio.pause();
-    audio.currentTime = 0;
-    playPauseBtn.textContent = '▶';
-    isPlaying = false;
-    audioPlayer.classList.remove('active');
-});
+closeBtn.addEventListener('click', hidePlayer);
 
-// Обработчик для кнопки "Слушать" в карточке
-document.querySelector('.music-card .listen-button').addEventListener('click', (e) => {
-    e.preventDefault();
-    audioPlayer.classList.add('active');
-    audio.play();
-    playPauseBtn.textContent = '❚❚';
-    isPlaying = true;
+// Запуск песни при нажатии на кнопку "Слушать"
+document.querySelectorAll('.listen-button').forEach(button => {
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const track = button.getAttribute('data-track');
+        if (track) {
+            audio.src = track;
+            showPlayer();
+            audio.play();
+            playIcon.style.display = 'none';
+            pauseIcon.style.display = 'block';
+        }
+    });
 });
     </script>
 </body>
-</html> 
+</html>
