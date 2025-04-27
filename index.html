@@ -634,41 +634,39 @@
 </head>
 <body>
  <div class="background-animation"></div>
-    
-    <!-- Контейнер для аудиоплеера -->
-    <div id="audio-player" class="audio-player">
-        <div class="audio-player-content">
-            <div class="player-header">
-                <span class="player-title">Мальчик с веснушками</span>
-                <button class="player-close" title="Закрыть">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 6L6 18M6 6l12 12"/>
-                    </svg>
-                </button>
-            </div>
-            <div class="player-controls">
-                <button id="play-pause" class="control-button" title="Воспроизвести/Пауза">
-                    <svg id="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M8 5v14l11-7z"/>
-                    </svg>
-                    <svg id="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-                    </svg>
-                </button>
-                <button id="stop" class="control-button" title="Остановить">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M6 6h12v12H6z"/>
-                    </svg>
-                </button>
-            </div>
-            <div class="progress-container">
-                <span id="current-time">0:00</span>
-                <input type="range" id="progress" min="0" max="100" value="0" class="progress-bar">
-                <span id="duration">0:00</span>
-            </div>
+<div id="audio-player" class="audio-player">
+    <div class="audio-player-content">
+        <div class="player-header">
+            <span class="player-title">Мальчик с веснушками</span>
+            <button class="player-close" title="Закрыть">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+            </button>
         </div>
-        <audio id="audio" src="malchick_s_vesnychkami.mp3"></audio>
+        <div class="player-controls">
+            <button id="play-pause" class="control-button" title="Воспроизвести/Пауза">
+                <svg id="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+                <svg id="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                </svg>
+            </button>
+            <button id="stop" class="control-button" title="Остановить">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 6h12v12H6z"/>
+                </svg>
+            </button>
+        </div>
+        <div class="progress-container">
+            <span id="current-time">0:00</span>
+            <input type="range" id="progress" min="0" max="100" value="0" class="progress-bar">
+            <span id="duration">0:00</span>
+        </div>
     </div>
+    <audio id="audio" src="malchick_s_vesnychkami.mp3"></audio>
+</div>
     
     <div class="background-animation"></div>
     
@@ -831,30 +829,29 @@
             </span>
             <span class="button-text">GitHub</span>
         </a>
-          <!-- Контейнер для музыкальных карточек -->
-       <div class="music-cards-container">
-            <div class="music-card">
-                <img src="https://i.discogs.com/mLfn1YlkQx9aL8ONMdtrk-nznK6Kpq1u6Tnx4IlyozY/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI2MTAx/Nzk4LTE2NzY0MDI4/MzEtMzQ0OS5qcGVn.jpeg" alt="Постер 1" class="music-poster">
-                <div class="music-info">
-                    <h3>Мальчик с веснушками</h3>
-                    <a href="#" class="listen-button" data-track="malchick_s_vesnychkami.mp3">Слушать</a>
-                </div>
-            </div>
-            <div class="music-card">
-                <img src="https://example.com/poster2.jpg" alt="Постер 2" class="music-poster">
-                <div class="music-info">
-                    <h3>Название трека 2</h3>
-                    <a href="#" class="listen-button">Слушать</a>
-                </div>
-            </div>
-            <div class="music-card">
-                <img src="https://example.com/poster3.jpg" alt="Постер 3" class="music-poster">
-                <div class="music-info">
-                    <h3>Название трека 3</h3>
-                    <a href="#" class="listen-button">Слушать</a>
-                </div>
-            </div>
+<div class="music-cards-container">
+    <div class="music-card">
+        <img src="https://i.discogs.com/mLfn1YlkQx9aL8ONMdtrk-nznK6Kpq1u6Tnx4IlyozY/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI2MTAx/Nzk4LTE2NzY0MDI4/MzEtMzQ0OS5qcGVn.jpeg" alt="Постер 1" class="music-poster">
+        <div class="music-info">
+            <h3>Мальчик с веснушками</h3>
+            <a href="#" class="listen-button" data-track="malchick_s_vesnychkami.mp3">Слушать</a>
         </div>
+    </div>
+    <div class="music-card">
+        <img src="https://i.scdn.co/image/ab67616d00001e02f816fbc0270a84d67baa2447" alt="Постер 1" class="music-poster">
+        <div class="music-info">
+            <h3>НСТФ</h3>
+            <a href="#" class="listen-button" data-track="nstf.mp3">Слушать</a>
+        </div>
+    </div>
+   <div class="music-card">
+    <img src="https://via.placeholder.com/300x300" alt="Постер Ток" class="music-poster">
+    <div class="music-info">
+        <h3>ток</h3>
+        <a href="#" class="listen-button" data-track="tok.mp3">Слушать</a>
+    </div>
+</div>
+</div>
 
         <p style="text-align: center; margin-top: 20px; opacity: 0.7;">И много других, о которых Вам нельзя знать :)</p>
     </div>
@@ -977,64 +974,81 @@
             // document.getElementById('avatar').src = 'путь_к_аватарке';
         });
         
-        // Управление аудиоплеером
-const audioPlayer = document.getElementById('audio-player');
+// Управление аудиоплеером
 const audio = document.getElementById('audio');
 const playPauseBtn = document.getElementById('play-pause');
 const stopBtn = document.getElementById('stop');
-const progressBar = document.getElementById('progress');
-const currentTimeEl = document.getElementById('current-time');
-const durationEl = document.getElementById('duration');
-const closeBtn = document.querySelector('.player-close');
 const playIcon = document.getElementById('play-icon');
 const pauseIcon = document.getElementById('pause-icon');
+const progress = document.getElementById('progress');
+const currentTime = document.getElementById('current-time');
+const duration = document.getElementById('duration');
+const playerTitle = document.querySelector('.player-title');
+const listenButtons = document.querySelectorAll('.listen-button');
 
-// Форматирование времени (mm:ss)
+// Форматирование времени (мм:сс)
 function formatTime(seconds) {
-    const minutes = Math.floor(seconds / 60);
-    seconds = Math.floor(seconds % 60);
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-}
-
-// Показать плеер
-function showPlayer() {
-    audioPlayer.classList.add('active');
-}
-
-// Скрыть плеер
-function hidePlayer() {
-    audioPlayer.classList.remove('active');
-    audio.pause();
-    audio.currentTime = 0;
-    progressBar.value = 0;
-    currentTimeEl.textContent = '0:00';
-    playIcon.style.display = 'block';
-    pauseIcon.style.display = 'none';
+    const min = Math.floor(seconds / 60);
+    const sec = Math.floor(seconds % 60);
+    return `${min}:${sec < 10 ? '0' : ''}${sec}`;
 }
 
 // Обновление прогресс-бара и времени
 audio.addEventListener('timeupdate', () => {
-    const currentTime = audio.currentTime;
-    const duration = audio.duration;
-    progressBar.value = (currentTime / duration) * 100;
-    currentTimeEl.textContent = formatTime(currentTime);
-    if (!isNaN(duration)) {
-        durationEl.textContent = formatTime(duration);
-    }
+    const current = audio.currentTime;
+    const dur = audio.duration;
+    progress.value = (current / dur) * 100 || 0;
+    currentTime.textContent = formatTime(current);
+    duration.textContent = formatTime(dur);
 });
 
-// Загрузка длительности трека
+// Установка длительности при загрузке метаданных
 audio.addEventListener('loadedmetadata', () => {
-    durationEl.textContent = formatTime(audio.duration);
+    duration.textContent = formatTime(audio.duration);
 });
 
-// Перемотка при изменении ползунка
-progressBar.addEventListener('input', () => {
-    const duration = audio.duration;
-    audio.currentTime = (progressBar.value / 100) * duration;
+// Обработка изменения прогресс-бара
+progress.addEventListener('input', () => {
+    audio.currentTime = (progress.value / 100) * audio.duration;
 });
 
-// Воспроизведение/пауза
+// Обработка нажатия на кнопки "Слушать"
+// Обработка нажатия на кнопки "Слушать"
+listenButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const track = button.getAttribute('data-track');
+        const trackName = button.parentElement.querySelector('h3').textContent;
+
+        // Установить новый источник аудио и заголовок
+        audio.src = track;
+        playerTitle.textContent = trackName;
+
+        // Сбросить прогресс и время
+        progress.value = 0;
+        currentTime.textContent = '0:00';
+        duration.textContent = '0:00';
+
+        // Показать плеер
+        document.getElementById('audio-player').classList.add('active');
+
+        // Воспроизвести трек
+        audio.play();
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+    });
+});
+
+// Закрытие плеера
+document.querySelector('.player-close').addEventListener('click', () => {
+    audio.pause();
+    audio.currentTime = 0;
+    document.getElementById('audio-player').classList.remove('active');
+    playIcon.style.display = 'block';
+    pauseIcon.style.display = 'none';
+});
+
+// Кнопка воспроизведения/паузы
 playPauseBtn.addEventListener('click', () => {
     if (audio.paused) {
         audio.play();
@@ -1047,32 +1061,23 @@ playPauseBtn.addEventListener('click', () => {
     }
 });
 
-// Остановка
+// Кнопка остановки
 stopBtn.addEventListener('click', () => {
     audio.pause();
     audio.currentTime = 0;
-    progressBar.value = 0;
-    currentTimeEl.textContent = '0:00';
+    progress.value = 0;
+    currentTime.textContent = '0:00';
     playIcon.style.display = 'block';
     pauseIcon.style.display = 'none';
 });
 
 // Закрытие плеера
-closeBtn.addEventListener('click', hidePlayer);
-
-// Запуск песни при нажатии на кнопку "Слушать"
-document.querySelectorAll('.listen-button').forEach(button => {
-    button.addEventListener('click', (e) => {
-        e.preventDefault();
-        const track = button.getAttribute('data-track');
-        if (track) {
-            audio.src = track;
-            showPlayer();
-            audio.play();
-            playIcon.style.display = 'none';
-            pauseIcon.style.display = 'block';
-        }
-    });
+document.querySelector('.player-close').addEventListener('click', () => {
+    audio.pause();
+    audio.currentTime = 0;
+    document.getElementById('audio-player').style.display = 'none';
+    playIcon.style.display = 'block';
+    pauseIcon.style.display = 'none';
 });
     </script>
 </body>
