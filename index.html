@@ -499,9 +499,18 @@
     overflow: hidden;
 }
 
-.audio-player.active {
-    top: 20px; /* Появляется сверху */
+.audio-player {
+    transition: top 0.5s ease, opacity 0.5s ease, filter 0.5s ease;
+    opacity: 0;
+    filter: blur(10px);
 }
+
+.audio-player.active {
+    top: 20px;
+    opacity: 1;
+    filter: blur(0);
+}
+
 
 .audio-player-content {
     padding: 20px;
@@ -692,9 +701,154 @@
     justify-content: center;
     align-items: center;
 }
+
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: opacity 0.8s ease, filter 0.8s ease;
+    overflow: hidden;
+}
+
+.loading-screen.fade-out {
+    opacity: 0;
+    filter: blur(20px);
+}
+
+.loading-content {
+    text-align: center;
+    color: var(--primary-light);
+    animation: pulseGlow 2s ease-in-out infinite alternate;
+}
+
+.loading-title {
+    font-size: 36px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-light), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px rgba(0, 122, 255, 0.5);
+}
+
+.loading-subtitle {
+    font-size: 18px;
+    opacity: 0.8;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+.loading-progress-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.loading-progress-text {
+    font-size: 24px;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 8px rgba(0, 122, 255, 0.4);
+}
+
+.loading-bar {
+    width: 400px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 0 15px rgba(0, 122, 255, 0.3);
+}
+
+.loading-bar-progress {
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+    border-radius: 5px;
+    transition: width 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.loading-bar-progress::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.2) 75%,
+        transparent 75%,
+        transparent
+    );
+    background-size: 30px 30px;
+    animation: moveStripes 1s linear infinite;
+}
+
+@keyframes pulseGlow {
+    0% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(1.02);
+        opacity: 1;
+    }
+}
+
+@keyframes moveStripes {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 30px 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .loading-title {
+        font-size: 28px;
+    }
+    .loading-subtitle {
+        font-size: 16px;
+    }
+    .loading-bar {
+        width: 300px;
+    }
+    .loading-progress-text {
+        font-size: 20px;
+    }
+}
     </style>
 </head>
 <body>
+<div id="loading-screen" class="loading-screen">
+    <div class="loading-content">
+        <p>Надо чут-чут подождать...</p>
+        <p>Загрузка всех элементов страницы: <span id="loading-progress">0%</span></p>
+        <p>‏‎‏‎‏‎ㅤ</p>
+        <div class="loading-bar">
+            <div id="loading-bar-progress" class="loading-bar-progress"></div>
+        </div>
+    </div>
+</div>
  <div class="background-animation"></div>
 <div id="audio-player" class="audio-player">
     <div class="audio-player-content">
@@ -1016,6 +1170,35 @@
 </nav>
     
     <script>
+// Управление экраном загрузки
+function updateLoadingProgress(progress) {
+    const progressText = document.getElementById('loading-progress');
+    const progressBar = document.getElementById('loading-bar-progress');
+    progressText.textContent = `${progress}%`;
+    progressBar.style.width = `${progress}%`;
+}
+
+function hideLoadingScreen() {
+    const loadingScreen = document.getElementById('loading-screen');
+    loadingScreen.classList.add('fade-out');
+    setTimeout(() => {
+        loadingScreen.style.display = 'none';
+    }, 800); // Соответствует длительности transition
+}
+
+// Симуляция загрузки (замените на реальную логику, если нужно)
+window.addEventListener('load', () => {
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += 1; // Уменьшил шаг для более плавной анимации
+        updateLoadingProgress(progress);
+        if (progress >= 100) {
+            clearInterval(interval);
+            setTimeout(hideLoadingScreen, 300); // Задержка перед исчезновением
+        }
+    }, 30); // Уменьшил интервал для плавности
+});
+
         // Функция для переключения между разделами
         function switchSection(section) {
             // Скрыть все разделы
@@ -1119,6 +1302,7 @@ const currentTime = document.getElementById('current-time');
 const duration = document.getElementById('duration');
 const playerTitle = document.querySelector('.player-title');
 const listenButtons = document.querySelectorAll('.listen-button');
+const audioPlayer = document.getElementById('audio-player');
 
 // Форматирование времени (мм:сс)
 function formatTime(seconds) {
@@ -1147,7 +1331,6 @@ progress.addEventListener('input', () => {
 });
 
 // Обработка нажатия на кнопки "Слушать"
-// Обработка нажатия на кнопки "Слушать"
 listenButtons.forEach(button => {
     button.addEventListener('click', (e) => {
         e.preventDefault();
@@ -1164,10 +1347,10 @@ listenButtons.forEach(button => {
         duration.textContent = '0:00';
 
         // Показать плеер
-        document.getElementById('audio-player').classList.add('active');
+        audioPlayer.classList.add('active');
 
         // Воспроизвести трек
-        audio.play();
+        audio.play().catch(err => console.error('Ошибка воспроизведения:', err));
         playIcon.style.display = 'none';
         pauseIcon.style.display = 'block';
     });
@@ -1177,15 +1360,19 @@ listenButtons.forEach(button => {
 document.querySelector('.player-close').addEventListener('click', () => {
     audio.pause();
     audio.currentTime = 0;
-    document.getElementById('audio-player').classList.remove('active');
+    audio.src = ''; // Сбрасываем источник, чтобы избежать проблем с повторным воспроизведением
+    audioPlayer.classList.remove('active');
     playIcon.style.display = 'block';
     pauseIcon.style.display = 'none';
+    progress.value = 0;
+    currentTime.textContent = '0:00';
+    duration.textContent = '0:00';
 });
 
 // Кнопка воспроизведения/паузы
 playPauseBtn.addEventListener('click', () => {
-    if (audio.paused) {
-        audio.play();
+    if (audio.paused && audio.src) {
+        audio.play().catch(err => console.error('Ошибка воспроизведения:', err));
         playIcon.style.display = 'none';
         pauseIcon.style.display = 'block';
     } else {
@@ -1201,15 +1388,6 @@ stopBtn.addEventListener('click', () => {
     audio.currentTime = 0;
     progress.value = 0;
     currentTime.textContent = '0:00';
-    playIcon.style.display = 'block';
-    pauseIcon.style.display = 'none';
-});
-
-// Закрытие плеера
-document.querySelector('.player-close').addEventListener('click', () => {
-    audio.pause();
-    audio.currentTime = 0;
-    document.getElementById('audio-player').style.display = 'none';
     playIcon.style.display = 'block';
     pauseIcon.style.display = 'none';
 });
@@ -1254,4 +1432,4 @@ window.addEventListener('DOMContentLoaded', () => {
 });
     </script>
 </body>
-</html>
+</html> 
